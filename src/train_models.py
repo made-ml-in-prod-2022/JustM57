@@ -13,7 +13,7 @@ from sklearn.model_selection import StratifiedKFold, KFold, RandomizedSearchCV
 from sklearn.metrics import make_scorer, f1_score
 from sklearn.exceptions import ConvergenceWarning
 
-from entities import ModelParams, ProcessingParams, ModelAttributes
+from src.entities import ModelParams, ProcessingParams, ModelAttributes
 
 
 RANDOM_STATE = 57

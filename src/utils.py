@@ -9,7 +9,7 @@ import requests
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from entities import DataPaths
+from src.entities import DataPaths
 
 
 RANDOM_SEED = 57

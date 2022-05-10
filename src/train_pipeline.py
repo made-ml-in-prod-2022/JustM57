@@ -6,10 +6,10 @@ from typing import NoReturn
 
 import click
 
-from utils import train_test_dataset
-from entities import read_training_pipeline_params
-from preprocessing import process_train_data
-from train_models import train_model_cv, save_results
+from src.utils import train_test_dataset
+from src.entities import read_training_pipeline_params
+from src.preprocessing import process_train_data
+from src.train_models import train_model_cv, save_results
 
 
 logger = logging.getLogger(__name__)

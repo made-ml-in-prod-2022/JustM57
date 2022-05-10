@@ -6,7 +6,7 @@ from typing import List, Union
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, OrdinalEncoder
-from entities import ProcessingParams
+from src.entities import ProcessingParams
 
 
 TARGET_COLUMN = 'HeartDisease'
