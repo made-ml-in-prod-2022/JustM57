@@ -23,6 +23,12 @@ logging.basicConfig(
 @click.argument("data_path")
 @click.argument("model_path")
 @click.argument("predictions_path")
+def make_predictions_wrapper(
+        data_path: str, model_path: str, predictions_path: str
+) -> NoReturn:
+    return make_predictions(data_path, model_path, predictions_path)
+
+
 def make_predictions(
         data_path: str, model_path: str, predictions_path: str
 ) -> NoReturn:
@@ -47,4 +53,4 @@ def make_predictions(
 
 
 if __name__ == '__main__':
-    make_predictions()
+    make_predictions_wrapper()

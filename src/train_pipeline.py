@@ -23,6 +23,10 @@ logging.basicConfig(
 
 @click.command()
 @click.argument("config_path")
+def train_pipeline_wrapper(config_path: str):
+    return train_pipeline(config_path)
+
+
 def train_pipeline(config_path: str) -> NoReturn:
     """
     training pipeline function:
@@ -54,4 +58,4 @@ def train_pipeline(config_path: str) -> NoReturn:
 
 
 if __name__ == '__main__':
-    train_pipeline()
+    train_pipeline_wrapper()

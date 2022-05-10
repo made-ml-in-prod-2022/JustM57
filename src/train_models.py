@@ -98,11 +98,11 @@ def save_results(
         model_params=model_params,
         best_params=cv_model.best_params_
     )
-    path = Path(model_params.output_model_path)
-    path = path.with_name(
-        path.stem + f'{round(cv_model.best_score_, 4)}' + path.suffix
-    )
-    with open(path, 'wb') as file_out:
+    # path = Path(model_params.output_model_path)
+    # path = path.with_name(
+    #     path.stem + f'{round(cv_model.best_score_, 4)}' + path.suffix
+    # )
+    with open(model_params.output_model_path, 'wb') as file_out:
         pickle.dump(model_attributes, file_out)
 
 
