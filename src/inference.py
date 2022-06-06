@@ -6,8 +6,12 @@ from typing import NoReturn
 
 import click
 
-from src.preprocessing import process_test_data
-from src.train_models import infer_cv_model
+try:
+    from preprocessing import process_test_data
+    from train_models import infer_cv_model
+except ImportError:
+    from src.preprocessing import process_test_data
+    from src.train_models import infer_cv_model
 
 
 logger = logging.getLogger(__name__)

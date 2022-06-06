@@ -14,9 +14,11 @@ class DataPaths:
     """
     initial data paths
     """
+    data_url: str
     input_data_path: str
     train_data_path: str
     test_data_path: str
+    split_random_seed: int = field(default=57)
 
 
 @dataclass()
@@ -51,6 +53,8 @@ class ModelParams:
     model_name: str
     search_space: Union[LinearSearchSpace]
     output_model_path: str
+    random_state: int = field(default=57)
+    boosting_learning_rate: float = field(default=0.03)
     hp_search_iter: int = field(default=20)
     cv_seed: int = field(default=20)
     cv_splits: int = field(default=3)

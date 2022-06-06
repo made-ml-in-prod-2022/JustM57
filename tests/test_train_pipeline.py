@@ -10,7 +10,9 @@ from tests.fake_data import fake_features
 
 
 FAKE_DATASET_SIZE = 10000
+TMP_CFG_NAME = "cfg.yaml"
 TMP_CFG_TEXT = '''data_paths:
+    data_url: "https://disk.yandex.ru/d/0cGPjd-6nLpFAQ"
     input_data_path: "tmp/data.csv.zip"
     train_data_path: "tmp/train_data.csv"
     test_data_path: "tmp/test_data.csv"
@@ -34,11 +36,9 @@ model_params:
 '''
 
 
-def create_cfg() -> NoReturn:
-    if not os.path.exists('tmp'):
-        os.mkdir('tmp')
-    with open('tmp/cfg.yaml', 'w') as f_out:
-        f_out.write(TMP_CFG_TEXT)
+def create_cfg(tmpdir) -> NoReturn:
+    f_out = tmpdir.join(TMP_CFG_NAME)
+    f_out.write(TMP_CFG_TEXT)
 
 
 def create_fake_dataset(p: float) -> NoReturn:
@@ -51,9 +51,9 @@ def create_fake_dataset(p: float) -> NoReturn:
     'p', [(0.1),
           (0.5)]
 )
-def test_train_test(p):
-    create_cfg()
+def test_train_test(p, tmpdir):
+    create_cfg(tmpdir)
     create_fake_dataset(p)
-    train_pipeline('tmp/cfg.yaml')
+    train_pipeline(os.path.join(tmpdir, TMP_CFG_NAME))
     make_predictions(data_path="tmp/train_data.csv", model_path="tmp/logistic_regression_minmax.pkl",
                      predictions_path="tmp/predictions.csv")

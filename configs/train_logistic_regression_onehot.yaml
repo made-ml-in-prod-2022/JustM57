@@ -1,4 +1,5 @@
 data_paths:
+  data_url: "https://disk.yandex.ru/d/0cGPjd-6nLpFAQ"
   input_data_path: "data/data.csv.zip"
   train_data_path: "data/train_data.csv"
   test_data_path: "data/test_data.csv"
@@ -21,3 +22,4 @@ model_params:
     C: [0.01, 0.1, 1., 10., 100.]
     class_weight: ["Balanced", null]
   output_model_path: "models/logistic_regression_standard.pkl"
+  random_state: 57

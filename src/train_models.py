@@ -4,7 +4,6 @@ ml model module
 import pickle
 from warnings import simplefilter
 from typing import Union, List, NoReturn
-from pathlib import Path
 
 import pandas as pd
 from lightgbm import LGBMClassifier
@@ -13,11 +12,10 @@ from sklearn.model_selection import StratifiedKFold, KFold, RandomizedSearchCV
 from sklearn.metrics import make_scorer, f1_score
 from sklearn.exceptions import ConvergenceWarning
 
-from src.entities import ModelParams, ProcessingParams, ModelAttributes
-
-
-RANDOM_STATE = 57
-BOOSTING_LEARNING_RATE = 0.03
+try:
+    from entities import ModelParams, ProcessingParams, ModelAttributes
+except ImportError:
+    from src.entities import ModelParams, ProcessingParams, ModelAttributes
 
 
 ClassificationModel = Union[LogisticRegression, LGBMClassifier]
@@ -25,7 +23,7 @@ simplefilter("ignore", category=ConvergenceWarning)
 
 
 def init_base_model(
-        model_name: str, categorical_columns: List[int]
+        model_name: str, random_state: int, learning_rate: float, categorical_columns: List[int]
 ) -> ClassificationModel:
     """
     Initiation of a model with params
@@ -34,11 +32,11 @@ def init_base_model(
     :return: ml model to be fitted
     """
     if model_name == 'LogisticRegression':
-        return LogisticRegression(random_state=RANDOM_STATE, solver='saga')
+        return LogisticRegression(random_state=random_state, solver='saga')
     if model_name == 'LGBMClassifier':
         return LGBMClassifier(
-            random_state=RANDOM_STATE,
-            learning_rate=BOOSTING_LEARNING_RATE,
+            random_state=random_state,
+            learning_rate=learning_rate,
             categorical_features=categorical_columns
         )
     raise ValueError("Can't recognize model name")
@@ -70,7 +68,8 @@ def train_model_cv(
                    random_state=model_params.cv_seed, shuffle=True)
     categorical_columns = [idx for idx, val in enumerate(x_train.columns)
                            if val in categorical_columns]
-    model = init_base_model(model_params.model_name, categorical_columns)
+    model = init_base_model(model_params.model_name, model_params.random_state,
+                            model_params.boosting_learning_rate, categorical_columns)
     scorer = make_scorer(f1_score)
     random_search = RandomizedSearchCV(
         model, param_distributions=model_params.search_space.__dict__,
