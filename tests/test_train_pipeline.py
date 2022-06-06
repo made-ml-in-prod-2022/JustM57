@@ -41,10 +41,10 @@ def create_cfg(tmpdir) -> NoReturn:
     f_out.write(TMP_CFG_TEXT)
 
 
-def create_fake_dataset(p: float) -> NoReturn:
+def create_fake_dataset(p: float, file_path: str) -> NoReturn:
     x_train = fake_features(FAKE_DATASET_SIZE)
     x_train['HeartDisease'] = np.random.choice(['Yes', 'No'], size=FAKE_DATASET_SIZE, p=[p, (1 - p)])
-    x_train.to_csv("tmp/data.csv.zip", compression='zip', index=False)
+    x_train.to_csv(file_path, compression='zip', index=False)
 
 
 @pytest.mark.parametrize(
@@ -53,7 +53,8 @@ def create_fake_dataset(p: float) -> NoReturn:
 )
 def test_train_test(p, tmpdir):
     create_cfg(tmpdir)
-    create_fake_dataset(p)
-    train_pipeline(os.path.join(tmpdir, TMP_CFG_NAME))
+    file_path = os.path.join(tmpdir, TMP_CFG_NAME)
+    create_fake_dataset(p, file_path)
+    train_pipeline(file_path)
     make_predictions(data_path="tmp/train_data.csv", model_path="tmp/logistic_regression_minmax.pkl",
                      predictions_path="tmp/predictions.csv")
