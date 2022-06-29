@@ -1,0 +1,25 @@
+data_paths:
+  data_url: "https://disk.yandex.ru/d/0cGPjd-6nLpFAQ"
+  input_data_path: "data/data.csv.zip"
+  train_data_path: "data/train_data.csv"
+  test_data_path: "data/test_data.csv"
+processing_params:
+  numerical_encoder_path: "models/numerical_encoder_logreg_minmax.pkl"
+  processing_type: "Linear"
+  scaler_type: "StandardScaler"
+  categorical_features:
+    - "Race"
+    - "Diabetic"
+    - "GenHealth"
+  onehot_columns_path: "models/onehot_logreg_standard.pkl"
+  scaler_path: "models/scaler_logreg_standard.pkl"
+model_params:
+  cv_type: "KFold"
+  cv_splits: 4
+  model_name: "LogisticRegression"
+  search_space:
+    penalty: ["l1", "l2"]
+    C: [0.01, 0.1, 1., 10., 100.]
+    class_weight: ["Balanced", null]
+  output_model_path: "models/logistic_regression_standard.pkl"
+  random_state: 57
