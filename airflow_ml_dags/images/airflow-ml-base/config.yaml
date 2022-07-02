@@ -1,0 +1,20 @@
+processing_params:
+  numerical_encoder_path: "numerical_encoder.pkl"
+  processing_type: "Linear"
+  scaler_type: "StandardScaler"
+  categorical_features:
+    - "Race"
+    - "Diabetic"
+    - "GenHealth"
+  onehot_columns_path: "onehot.pkl"
+  scaler_path: "scaler.pkl"
+model_params:
+  cv_type: "KFold"
+  cv_splits: 4
+  model_name: "LogisticRegression"
+  search_space:
+    penalty: ["l1", "l2"]
+    C: [0.01, 0.1, 1., 10., 100.]
+    class_weight: ["Balanced", null]
+  output_model_path: "logistic_regression.pkl"
+  random_state: 57
